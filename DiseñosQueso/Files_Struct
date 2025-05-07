@@ -2,7 +2,8 @@ lib/
 ├── main.dart
 ├── core/
 │   ├── constants/
-│   │   └── api_endpoints.dart       # Endpoints del backend
+│   │   ├── api_endpoints.dart       # Endpoints del backend
+│   │   └── config.dart              # Configuración base de la API
 │   ├── utils/
 │   │   ├── formatters.dart          # Utilidades para formatear datos (fechas, números, etc.)
 │   │   └── validators.dart          # Validaciones comunes
