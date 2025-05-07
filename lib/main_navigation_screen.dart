@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'features/clientes/controllers/cliente_controller.dart';
+import 'routes/app_routes.dart';
 
 class MainNavigationScreen extends StatelessWidget {
   const MainNavigationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gestión de Ventas'),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-        children: [
-          _buildNavigationTile(context, 'Clientes', Icons.people, '/clientes'),
-          _buildNavigationTile(context, 'Lotes', Icons.inventory, '/lotes'),
-          _buildNavigationTile(context, 'Recepciones', Icons.receipt, '/recepciones'),
-          _buildNavigationTile(context, 'Ventas', Icons.shopping_cart, '/ventas'),
-        ],
+    return ChangeNotifierProvider(
+      create: (_) => ClienteController()..fetchClientes(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Gestión de Ventas'),
+        ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          padding: const EdgeInsets.all(16.0),
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
+          children: [
+            _buildNavigationTile(context, 'Clientes', Icons.people, '/clientes'),
+            _buildNavigationTile(context, 'Lotes', Icons.inventory, '/lotes'),
+            _buildNavigationTile(context, 'Recepciones', Icons.receipt, '/recepciones'),
+            _buildNavigationTile(context, 'Ventas', Icons.shopping_cart, '/ventas'),
+          ],
+        ),
       ),
     );
   }

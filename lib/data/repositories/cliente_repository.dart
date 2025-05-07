@@ -1,41 +1,48 @@
+import 'dart:developer';
 import '../services/api_service.dart';
+import '../models/cliente_model.dart';
 
 class ClienteRepository {
   final ApiService _apiService;
 
   ClienteRepository(this._apiService);
 
-  Future<List<Map<String, String>>> getClientes() async {
-    final response = await _apiService.obtenerClientes();
-    if (response['success']) {
-      return List<Map<String, String>>.from(response['data']);
-    } else {
-      throw Exception(response['message']);
+  // Obtener la lista de clientes
+  Future<List<Cliente>> getClientes() async {
+    try {
+      final response = await _apiService.obtenerClientes();
+      
+      if (response['success'] == true && response['data'] != null) {
+        return (response['data'] as List)
+            .map((json) => Cliente.fromJson(json as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception(response['message'] ?? 'Error desconocido al obtener clientes');
+      }
+    } catch (e) {
+      throw Exception('Error al obtener los clientes: $e');
     }
   }
 
-  Future<void> addCliente(Map<String, String> cliente) async {
-    final response = await _apiService.registrarCliente(cliente['nombre']!, cliente['contacto']!);
+  // Registrar un nuevo cliente
+  Future<void> _handleResponse(Future<Map<String, dynamic>> Function() apiCall) async {
+    final response = await apiCall();
     if (!response['success']) {
       throw Exception(response['message']);
     }
   }
 
-  Future<void> updateCliente(Map<String, String> cliente) async {
-    final response = await _apiService.actualizarCliente(
-      cliente['id']!,
-      cliente['nombre']!,
-      cliente['contacto']!,
-    );
-    if (!response['success']) {
-      throw Exception(response['message']);
-    }
+  Future<void> addCliente(String nombre, String contacto) async {
+    await _handleResponse(() => _apiService.registrarCliente(nombre, contacto));
   }
 
-  Future<void> deleteCliente(String id) async {
-    final response = await _apiService.eliminarCliente(id);
-    if (!response['success']) {
-      throw Exception(response['message']);
-    }
+  // Actualizar un cliente existente
+  Future<void> updateCliente(int id, String nombre, String contacto) async {
+    await _handleResponse(() => _apiService.actualizarCliente(id.toString(), nombre, contacto));
+  }
+
+  // Eliminar un cliente
+  Future<void> deleteCliente(int id) async {
+    await _handleResponse(() => _apiService.eliminarCliente(id.toString()));
   }
 }

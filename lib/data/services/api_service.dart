@@ -1,19 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../core/constants/api_endpoints.dart';
+import 'dart:developer';
 
 class ApiService {
-  Future<Map<String, dynamic>> registrarCliente(String nombre, String contacto) async {
-    final url = Uri.parse(ApiEndpoints.registrarCliente);
+  Future<Map<String, dynamic>> _handleRequest(Future<http.Response> request) async {
     try {
-      final response = await http.post(
-        url,
-        body: {
-          'nombre': nombre,
-          'contacto': contacto,
-        },
-      );
-
+      final response = await request;
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
@@ -30,12 +23,43 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> registrarCliente(String nombre, String contacto) async {
+    final url = Uri.parse(ApiEndpoints.registrarCliente);
+    return _handleRequest(http.post(
+      url,
+      body: {
+        'nombre': nombre,
+        'contacto': contacto,
+      },
+    ));
+  }
+
   Future<Map<String, dynamic>> obtenerClientes() async {
     final url = Uri.parse(ApiEndpoints.obtenerClientes);
     try {
       final response = await http.get(url);
+      log('Respuesta raw del servidor: ${response.body}'); // Para depuración
+      
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        try {
+          // Encontrar el inicio del JSON (primer '{')
+          final jsonStartIndex = response.body.indexOf('{');
+          if (jsonStartIndex != -1) {
+            final jsonStr = response.body.substring(jsonStartIndex);
+            return json.decode(jsonStr);
+          } else {
+            return {
+              'success': false,
+              'message': 'Formato de respuesta inválido'
+            };
+          }
+        } catch (e) {
+          log('Error al decodificar JSON: $e');
+          return {
+            'success': false,
+            'message': 'Error al procesar la respuesta del servidor: $e'
+          };
+        }
       } else {
         return {
           'success': false,
