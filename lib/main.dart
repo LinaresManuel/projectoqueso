@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'main_navigation_screen.dart';
-import 'features/clientes/screens/lista_clientes_screen.dart';
-import 'features/lotes/screens/lista_lotes_screen.dart';
-import 'features/recepciones/screens/lista_recepciones_screen.dart';
-import 'features/ventas/screens/lista_ventas_screen.dart';
+import 'routes/app_routes.dart';
 import 'features/clientes/controllers/cliente_controller.dart';
 import 'features/lotes/controllers/lote_controller.dart';
 import 'features/recepciones/controllers/recepcion_controller.dart';
@@ -36,14 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MainNavigationScreen(),
-        '/clientes': (context) => const ListaClientesScreen(),
-        '/lotes': (context) => const ListaLotesScreen(),
-        '/recepciones': (context) => const ListaRecepcionesScreen(),
-        '/ventas': (context) => const ListaVentasScreen(),
-      },
+      initialRoute: AppRoutes.initialRoute,  // Esto ahora apuntará a '/'
+      routes: AppRoutes.getRoutes(),
     );
   }
 }

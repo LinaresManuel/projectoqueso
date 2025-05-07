@@ -88,7 +88,6 @@ class _ListaClientesScreenState extends State<ListaClientesScreen> {
               itemCount: clienteController.clientes.length,
               itemBuilder: (context, index) {
                 final cliente = clienteController.clientes[index];
-                log('Renderizando cliente: ${cliente.nombre}');
                 return ClienteListTile(
                   nombre: cliente.nombre,
                   contacto: cliente.contacto,
@@ -96,7 +95,7 @@ class _ListaClientesScreenState extends State<ListaClientesScreen> {
                     Navigator.pushNamed(
                       context,
                       '/detalles_cliente',
-                      arguments: cliente,
+                      arguments: cliente,  // Pasar el objeto Cliente directamente
                     );
                   },
                 );

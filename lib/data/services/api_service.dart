@@ -516,4 +516,105 @@ class ApiService {
       };
     }
   }
+
+  Future<Map<String, dynamic>> registrarProducto(String nombre, String unidad) async {
+      final url = Uri.parse(ApiEndpoints.registrarProducto);
+      try {
+          final response = await http.post(
+              url,
+              body: {
+                  'nombre': nombre,
+                  'unidad': unidad,
+              },
+          );
+  
+          if (response.statusCode == 200) {
+              return json.decode(response.body);
+          } else {
+              return {
+                  'success': false,
+                  'message': 'Error en la solicitud: ${response.statusCode}'
+              };
+          }
+      } catch (e) {
+          return {
+              'success': false,
+              'message': 'Error de conexión: $e'
+          };
+      }
+  }
+
+  Future<Map<String, dynamic>> obtenerProductos() async {
+      final url = Uri.parse(ApiEndpoints.obtenerProductos);
+      try {
+          final response = await http.get(url);
+          if (response.statusCode == 200) {
+              return json.decode(response.body);
+          } else {
+              return {
+                  'success': false,
+                  'message': 'Error en la solicitud: ${response.statusCode}'
+              };
+          }
+      } catch (e) {
+          return {
+              'success': false,
+              'message': 'Error de conexión: $e'
+          };
+      }
+  }
+
+  Future<Map<String, dynamic>> actualizarProducto(String id, String nombre, String unidad) async {
+      final url = Uri.parse(ApiEndpoints.actualizarProducto);
+      try {
+          final response = await http.post(
+              url,
+              body: {
+                  'id': id,
+                  'nombre': nombre,
+                  'unidad': unidad,
+              },
+          );
+  
+          if (response.statusCode == 200) {
+              return json.decode(response.body);
+          } else {
+              return {
+                  'success': false,
+                  'message': 'Error en la solicitud: ${response.statusCode}'
+              };
+          }
+      } catch (e) {
+          return {
+              'success': false,
+              'message': 'Error de conexión: $e'
+          };
+      }
+  }
+
+  Future<Map<String, dynamic>> eliminarProducto(String id) async {
+      final url = Uri.parse(ApiEndpoints.eliminarProducto);
+      try {
+          final response = await http.post(
+              url,
+              body: {
+                  'id': id,
+              },
+          );
+  
+          if (response.statusCode == 200) {
+              return json.decode(response.body);
+          } else {
+              return {
+                  'success': false,
+                  'message': 'Error en la solicitud: ${response.statusCode}'
+              };
+          }
+      } catch (e) {
+          return {
+              'success': false,
+              'message': 'Error de conexión: $e'
+          };
+      }
+  }
 }

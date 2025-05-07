@@ -20,10 +20,30 @@ class MainNavigationScreen extends StatelessWidget {
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,
           children: [
-            _buildNavigationTile(context, 'Clientes', Icons.people, '/clientes'),
-            _buildNavigationTile(context, 'Lotes', Icons.inventory, '/lotes'),
-            _buildNavigationTile(context, 'Recepciones', Icons.receipt, '/recepciones'),
-            _buildNavigationTile(context, 'Ventas', Icons.shopping_cart, '/ventas'),
+            _buildNavigationTile(
+              context, 
+              'Clientes', 
+              Icons.people, 
+              AppRoutes.getRoutes().keys.firstWhere((route) => route == '/clientes')
+            ),
+            _buildNavigationTile(
+              context, 
+              'Lotes', 
+              Icons.inventory, 
+              AppRoutes.getRoutes().keys.firstWhere((route) => route == '/lotes')
+            ),
+            _buildNavigationTile(
+              context, 
+              'Recepciones', 
+              Icons.receipt, 
+              AppRoutes.getRoutes().keys.firstWhere((route) => route == '/recepciones')
+            ),
+            _buildNavigationTile(
+              context, 
+              'Ventas', 
+              Icons.shopping_cart, 
+              AppRoutes.getRoutes().keys.firstWhere((route) => route == '/ventas')
+            ),
           ],
         ),
       ),

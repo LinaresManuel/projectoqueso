@@ -23,4 +23,8 @@ class ApiEndpoints {
   static const String actualizarCliente = "$baseUrl/clientes/actualizar_cliente.php";
   static const String eliminarCliente = "$baseUrl/clientes/eliminar_cliente.php";
   static const String eliminarVenta = "$baseUrl/ventas/eliminar_venta.php";
+  static const String registrarProducto = "$baseUrl/productos/registrar_producto.php";
+  static const String obtenerProductos = "$baseUrl/productos/obtener_productos.php";
+  static const String actualizarProducto = "$baseUrl/productos/actualizar_producto.php";
+  static const String eliminarProducto = "$baseUrl/productos/eliminar_producto.php";
 }
