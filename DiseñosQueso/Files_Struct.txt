@@ -1,5 +1,6 @@
 lib/
 ├── main.dart
+├── main_navigation_screen.dart
 ├── core/
 │   ├── constants/
 │   │   ├── api_endpoints.dart       # Endpoints del backend
@@ -70,7 +71,6 @@ lib/
 │   └── app_routes.dart                     # Definición de rutas de la aplicación
 apisphp/
 ├── conexion.php
-├── crear_estructura_apis.dart
 ├── clientes/
 │   ├── actualizar_cliente.php
 │   ├── clientes_endeudados.php
